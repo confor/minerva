@@ -107,7 +107,7 @@ async def process_job(
         return
 
     # Surface success to user immediately once upload bytes + finish call succeeded
-    display.job_done(file_id, label, ok=True, note=humanize.naturalsize(file_size))
+    display.job_done(file_id, label, ok=True, note=humanize.naturalsize(file_size) if file_size else "")
     if not keep_files:
         local_path.unlink(missing_ok=True)
 
