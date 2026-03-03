@@ -58,7 +58,7 @@ options.
 > [!TIP]
 It's recommended to keep -c smaller or the same as -b.
 
-### How it works
+## How it works
 
 The worker script asks the minerva server for jobs to download. The server gives active workers random
 missing needed file URLs to download. When the worker is given a job, it temporarily downloads the file
@@ -77,7 +77,7 @@ You may see 409 Conflict errors on upload, this happens when either you or anoth
 files uploaded. Just ignore these error's and let the worker continue. If you suspect every file has this
 issue, please verify your network connection is stable and verify your downloads arent corrupted.
 
-### Discord Authentication
+## Discord Authentication
 
 When using the minerva worker, you are prompted upon startup to login and authorize with Discord. This is
 to authenticate unique users on the minerva server, to know who jobs are given to, and to use your username
@@ -104,7 +104,7 @@ Now feel free to work on the project however you like, all code will be checked 
 - [rlaphoenix] for further improvements, bug fixes, support.
 - [wikipiti] for the aria2 control file parsing code.
 
-  [bl79]: <https://github.com/bl79>
+  [bl791]: <https://github.com/bl791>
   [Puyodead1]: <https://github.com/Puyodead1>
   [rlaphoenix]: <https://github.com/rlaphoenix>
   [wikipiti]: <https://github.com/wikipiti>
