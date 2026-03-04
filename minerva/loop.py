@@ -1,7 +1,7 @@
 import asyncio
 from pathlib import Path
 from random import random
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 import httpx
 import jwt
@@ -108,14 +108,14 @@ async def worker_loop(
                         if job.get("size") and (min_job_size_bytes or max_job_size_bytes):
                             if min_job_size_bytes and (job["size"] < min_job_size_bytes):
                                 console.print(
-                                    f"[yellow]Skipping job {Path(urlparse(job["url"]).path).name} "
+                                    f"[yellow]Skipping job {Path(urlparse(unquote(job['url'])).path).name} "
                                     f"({naturalsize(job['size'])} < "
                                     f"{naturalsize(min_job_size_bytes)})[/yellow]"
                                 )
                                 continue
                             if max_job_size_bytes and (job["size"] > max_job_size_bytes):
                                 console.print(
-                                    f"[yellow]Skipping job {Path(urlparse(job["url"]).path).name} "
+                                    f"[yellow]Skipping job {Path(urlparse(unquote(job['url'])).path).name} "
                                     f"({naturalsize(job['size'])} > "
                                     f"{naturalsize(max_job_size_bytes)})[/yellow]"
                                 )

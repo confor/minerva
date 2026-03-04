@@ -5,6 +5,7 @@ from urllib.parse import unquote
 
 _size_index = None
 
+
 class SizeIndex:
     _instance = None
 
@@ -51,13 +52,15 @@ class SizeIndex:
 
     def get_size(self, url: str) -> int | None:
         decoded = unquote(url)
-        crc = zlib.crc32(decoded.encode()) & 0xffffffff
+        crc = zlib.crc32(decoded.encode()) & 0xFFFFFFFF
         return self.index.get(crc)
+
 
 def init_index(index_path: Path) -> None:
     global _size_index
     if _size_index is None:
         _size_index = SizeIndex(index_path)
+
 
 def get_size(url: str) -> int | None:
     """Get the size from the hash of a file URL."""
