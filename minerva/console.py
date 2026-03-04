@@ -181,9 +181,9 @@ class WorkerDisplay:
 
         table.add_column("", width=3)
         table.add_column("File")
-        table.add_column("Size", width=10, justify="right")
-        table.add_column("Speed", width=10, justify="right")
-        table.add_column("Progress", width=26)
+        table.add_column("Size", justify="right")
+        table.add_column("Speed", justify="right")
+        table.add_column("Progress", justify="right")
 
         for info in visible_jobs:
             st = info["status"]
