@@ -151,28 +151,28 @@ class WorkerDisplay:
 
     def update_rank(self) -> None:
         now = time.monotonic()
-        personal_stats: tuple[int | None, int | None] | tuple[None, None] | None = None
 
         with self._leaderboard_lock:
-            if self._username:
-                if now - self._leaderboard_last_fetch > 180 or self._leaderboard_cache is None:
-                    try:
-                        personal_stats = next(
-                            (
-                                (x.get("rank"), x.get("total_bytes"))
-                                for x in httpx.get(
-                                    "https://minerva-archive.org/api/leaderboard?limit=10000", timeout=30
-                                ).json()
-                                if x["discord_username"] == self._username
-                            ),
-                            (None, None),
-                        )
-                    except (JSONDecodeError, httpx.ConnectError):
-                        pass
-                    self._leaderboard_last_fetch = now
-            if personal_stats is not None:
-                with self._leaderboard_lock:
-                    self._leaderboard_cache = personal_stats
+            if not self._username:
+                return
+            if now - self._leaderboard_last_fetch <= 180 and self._leaderboard_cache is not None:
+                return
+            self._leaderboard_last_fetch = now
+
+        try:
+            personal_stats = next(
+                (
+                    (x.get("rank"), x.get("total_bytes"))
+                    for x in httpx.get("https://minerva-archive.org/api/leaderboard?limit=10000", timeout=30).json()
+                    if x["discord_username"] == self._username
+                ),
+                (None, None),
+            )
+        except (JSONDecodeError, httpx.ConnectError):
+            return
+
+        with self._leaderboard_lock:
+            self._leaderboard_cache = personal_stats
 
     def __rich__(self) -> Group:
         now = time.monotonic()
